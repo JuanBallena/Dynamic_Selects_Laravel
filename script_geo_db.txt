@@ -1,0 +1,108 @@
+CREATE DATABASE GEO_DB;
+
+CREATE TABLE COUNTRIES(
+id_country INT AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(100),
+status_visible BIT(1)
+);
+
+CREATE TABLE STATES(
+id_state INT AUTO_INCREMENT PRIMARY KEY,
+id_country INT,
+name VARCHAR(100),
+status_visible BIT(1)
+);
+
+CREATE TABLE CITIES(
+id_city INT AUTO_INCREMENT PRIMARY KEY,
+id_state INT,
+name VARCHAR(100),
+status_visible BIT(1)
+);
+
+CREATE TABLE JOBS(
+id_job INT AUTO_INCREMENT PRIMARY KEY,
+title VARCHAR(50),
+description VARCHAR(300),
+id_country INT,
+id_state INT,
+id_city INT,
+status BIT(1)
+);
+
+ALTER TABLE STATES
+ADD CONSTRAINT fk_004_geo_db FOREIGN KEY (id_country)
+REFERENCES COUNTRIES (id_country);
+
+ALTER TABLE CITIES
+ADD CONSTRAINT fk_005_geo_db FOREIGN KEY (id_state)
+REFERENCES STATES (id_state);
+
+ALTER TABLE JOBS
+ADD CONSTRAINT fk_001_geo_db FOREIGN KEY (id_country)
+REFERENCES COUNTRIES (id_country);
+
+ALTER TABLE JOBS
+ADD CONSTRAINT fk_002_geo_db FOREIGN KEY (id_state)
+REFERENCES STATES (id_state);
+
+ALTER TABLE JOBS
+ADD CONSTRAINT fk_003_geo_db FOREIGN KEY (id_city)
+REFERENCES CITIES (id_city);
+
+INSERT INTO COUNTRIES
+(name)
+VALUES
+("Perú");
+
+INSERT INTO STATES
+(id_country, name)
+VALUES
+(1, "Lima"),
+(1, "Tumbes"),
+(1, "La Libertad"),
+(1, "Ancash"),
+(1, "Lambayeque");
+
+INSERT INTO CITIES
+(id_state, name)
+VALUES
+(1, "Lima"),
+(1, "Surco"),
+(1, "Magdalena"),
+(1, "Comas"),
+(1, "Callao"),
+(2, "Zarumilla"),
+(3, "Trujillo"),
+(4, "Chimbote"),
+(5, "Chiclayo"),
+(1, "Zarumilla");
+
+INSERT INTO JOBS
+(title, description, id_country, id_state, id_city, status)
+VALUES
+("Diseñador UX", "Diseño y experiencia de usuario", 1, 1,1,1),
+("Desarrollador Vuejs", "Desarrollador web con Vuejs", 1, 1,1,1),
+("Desarrollador Angular", "Desarrollador web con Angular", 1, 1,1,1),
+("Diseñador UI", "Diseño de interfaces usuario con Adobe XD", 1, 1,1,1),
+("Desarrollador Backend", "Desarrollador Java", 1, 1,1,1),
+("Desarrollador Backend", "Desarrollador PHP", 1, 1,1,1),
+("Desarrollador Backend", "Desarrollador con Springboot", 1, 1,1,1),
+("Desarrollador Backend", "Desarrollador con Laravel", 1, 1,2,0),
+("Desarrollador Movil", "Desarrollador con Flutter", 1, 1,3,0),
+("Desarrollador Backend", "Desarrollador con Nodejs y Express", 1, 1,4,0),
+("Desarrollador Backend", "Desarrollador con Ruby", 1, 1,5,0),
+("Diseñador UI", "Diseño de interfaces usuario con Sketch", 1, 2,6,0),
+("Arquitecto en AWS", "Deployado de aplicaciones web", 1, 3,7,0),
+("Desarrollar Frontend", "Desarrollador HTML, CSS y JS", 1, 4,8,0),
+("Desarrollar Frontend", "Desarrollador con Vue y Vuetify", 1, 5,9,0);
+
+ALTER TABLE jobs
+ADD CONSTRAINT fk_007_geo_db FOREIGN KEY(id_user)
+REFERENCES users(id);
+
+
+
+Reserved characters: $ & + , / : ; = ? @
+
+Unsafe characters: Blank/empty space and < > # % { } | \ ^ ~ [ ] `
